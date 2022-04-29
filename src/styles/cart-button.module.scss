@@ -1,0 +1,12 @@
+@import "./common/mixins";
+.container {
+  width: 100%;
+  padding: 0px 20px;
+  @include button;
+  .subtractButton {
+    @include decrementButton;
+  }
+  .addButton {
+    @include incrementButton;
+  }
+}

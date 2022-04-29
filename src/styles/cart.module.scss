@@ -1,4 +1,32 @@
 .container {
-    display: flex;
-    margin: 10px 0px;
+  display: flex;
+  margin: 20px 50px;
+  width: 100%;
+  .cartEmptyText {
+    color: #7e808c;
+  }
+  .cartItemDetails {
+    .cartItem {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      .itemName {
+        width: 100%;
+        padding-right: 20px;
+      }
+      .price {
+        padding: 0px 20px;
+        width: 100%;
+      }
+    }
+  }
+  .checkoutButton {
+    border: none;
+    width: 200px;
+    height: 50px;
+    background-color: #60b246;
+    color: #fff;
+    cursor: pointer;
+  }
 }

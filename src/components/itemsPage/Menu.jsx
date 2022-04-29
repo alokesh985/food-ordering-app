@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/menu.module.scss";
 import { useSelector } from "react-redux";
-import { selectSlNo } from "../../store/restaurantSlice";
+import { selectSlNo } from "../../store/slices/restaurantSlice";
 import { menuItems } from "../../constants/menuItems";
+import AddButton from "../common/AddButton";
 
 const Menu = () => {
   const currentSlNo = useSelector(selectSlNo);
@@ -14,8 +15,6 @@ const Menu = () => {
     )[0];
     setCurrentMenuItems(currentMenu.items);
     setCategory(currentMenu.categoryName);
-
-    console.log(currentMenu);
   }, [currentSlNo]);
 
   return (
@@ -31,9 +30,10 @@ const Menu = () => {
               <div className={styles.name}>{item.itemName}</div>
               <div className={styles.price}>{`₹ ${item.price}`}</div>
             </div>
-            <div className={styles.buttonContainer}>
-              <button className={styles.addButton}>ADD</button>
-            </div>
+            <AddButton
+              currentItemName={item.itemName}
+              currentItemPrice={item.price}
+            />
           </div>
         );
       })}
