@@ -1,8 +1,12 @@
 import React from "react";
 import styles from "../../styles/checkout-page/checkout-body.module.scss";
 import CartBody from "../common/CartBody";
+import { useSelector } from "react-redux";
+import { selectCart } from "../../store/slices/cartSlice";
+import { Link } from "react-router-dom";
 
 const CheckoutBody = () => {
+  const cart = useSelector(selectCart);
   return (
     <div className={styles.container}>
       <div className={styles.checkoutBox}>
@@ -21,9 +25,13 @@ const CheckoutBody = () => {
         <div className={styles.cart}>
           <CartBody />
         </div>
-        <div className={styles.submitButtonContainer}>
-          <button className={styles.submitButton}>PAY</button>
-        </div>
+        {Object.keys(cart).length > 0 && (
+          <div className={styles.submitButtonContainer}>
+            <Link to="/order-success">
+              <button className={styles.submitButton}>PAY</button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

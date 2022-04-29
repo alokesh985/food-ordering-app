@@ -1,0 +1,19 @@
+.container {
+  .bodyContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10%;
+    flex-direction: column;
+
+    .imageContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .successText {
+      font-size: 36px;
+      font-weight: 900 !important;
+    }
+  }
+}
