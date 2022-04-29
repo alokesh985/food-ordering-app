@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 20%;
+  margin: 0px 20%;
+  .logoContainer {
+    display: flex;
+    flex-direction: row;
+    .logo {
+      width: 80px;
+      height: 80px;
+    }
+    .headerTextContainer {
+      margin: 10px;
+      .headerText {
+        font-weight: 800;
+        font-size: 24px;
+      }
+    }
+  }
+  .headerLinksContainer {
+    display: flex;
+    flex-direction: row;
+    .headerLink {
+      margin: 0px 20px;
+      text-decoration: none;
+      color: black;
+      cursor: pointer;
+      &:hover {
+        color: #f37f28;
+      }
+    }
+  }
+}

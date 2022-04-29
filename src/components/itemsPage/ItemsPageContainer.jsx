@@ -5,7 +5,7 @@ import ItemCategories from "./ItemCategories";
 import Menu from "./Menu";
 import Cart from "./Cart";
 import { mainPageLinks } from "../../constants/headerLinks";
-import styles from "../../styles/items-page-container.module.scss";
+import styles from "../../styles/items-page/items-page-container.module.scss";
 
 const ItemsPageContainer = () => {
   return (

@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "../../styles/header.module.scss";
+import styles from "../../styles/common/header.module.scss";
 
 const Header = (props) => {
-  const { headerLinks } = props;
+  const { headerLinks, headerText } = props;
   return (
     <div className={styles.container}>
       <div className={styles.logoContainer}>
@@ -11,6 +11,11 @@ const Header = (props) => {
           alt="swiggy-logo"
           className={styles.logo}
         />
+        {headerText && (
+          <div className={styles.headerTextContainer}>
+            <h2 className={styles.headerText}>{headerText}</h2>
+          </div>
+        )}
       </div>
       <div className={styles.headerLinksContainer}>
         {headerLinks.map((element, idx) => {

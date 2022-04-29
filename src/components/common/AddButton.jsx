@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/add-button.module.scss";
+import styles from "../../styles/common/add-button.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectCart,

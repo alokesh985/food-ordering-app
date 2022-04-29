@@ -1,0 +1,56 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e8ecee;
+  .checkoutBox {
+    background-color: #fff;
+    margin: 15%;
+    padding: 20px;
+    .restaurant {
+      display: flex;
+      flex-direction: row;
+      .image {
+        width: 200px;
+        height: 150px;
+      }
+      .restaurantDetails {
+        display: flex;
+        flex-direction: column;
+        .name {
+          font-weight: 700;
+          font-size: 40px;
+          margin: 5px 0px 5px 10px;
+        }
+        .cuisine {
+          font-size: 20px;
+          margin: 5px 0px 5px 10px;
+        }
+        .location {
+          font-size: 20px;
+          margin: 5px 0px 5px 10px;
+        }
+      }
+    }
+    .cart {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .submitButtonContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .submitButton {
+        padding: 17px;
+        width: 120px;
+        height: 50px;
+        background-color: #60b246;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+      }
+    }
+  }
+}
