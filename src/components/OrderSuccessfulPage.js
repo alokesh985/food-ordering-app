@@ -1,12 +1,13 @@
 import React from "react";
 import { Header } from "./common";
 import styles from "./common/order-success-page.module.scss";
-import { mainPageLinks } from "../constants/headerLinks";
+import { MAIN_PAGE_LINKS } from "../constants/headerLinks";
 
+// Simple page when order is successfully placed
 const OrderSuccessfulPage = () => {
   return (
     <div className={styles.container}>
-      <Header headerLinks={mainPageLinks} />
+      <Header headerLinks={MAIN_PAGE_LINKS} />
       <div className={styles.bodyContainer}>
         <div className={styles.imageContainer}>
           <img

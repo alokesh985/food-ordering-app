@@ -2,11 +2,10 @@ import React from "react";
 import styles from "./checkout-body.module.scss";
 import { CartBody } from "../common";
 import { useSelector } from "react-redux";
-import { selectCart } from "../../store/slices/cartSlice";
 import { Link } from "react-router-dom";
 
-const CheckoutBody = () => {
-  const cart = useSelector(selectCart);
+const CheckoutBody = ({ foodItems }) => {
+  const cart = useSelector((state) => state.cartReducer.cart);
   return (
     <div className={styles.container}>
       <div className={styles.checkoutBox}>
@@ -23,7 +22,7 @@ const CheckoutBody = () => {
           </div>
         </div>
         <div className={styles.cart}>
-          <CartBody />
+          <CartBody foodItems={foodItems} />
         </div>
         {Object.keys(cart).length > 0 && (
           <div className={styles.submitButtonContainer}>

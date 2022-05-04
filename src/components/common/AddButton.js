@@ -2,33 +2,37 @@ import React from "react";
 import styles from "./add-button.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  selectCart,
-  insertItem,
-  deleteItem,
-  incrementItem,
-  decrementItem,
-} from "../../store/slices/cartSlice";
+  insertItemIntoCart,
+  removeItemFromCart,
+  incrementItemInCart,
+  decrementItemInCart,
+} from "../../store/actions/cartActions";
 
-const AddButton = (props) => {
-  const cart = useSelector(selectCart);
+// Button on right of each item in the menu
+const AddButton = ({ itemID, price, idToNameMapping }) => {
+  const quantities = useSelector((state) => state.cartReducer.quantities);
   const dispatch = useDispatch();
-  const { currentItemName, currentItemPrice } = props;
 
   const handleAdd = () => {
-    if (!cart[currentItemName])
-      dispatch(insertItem({ currentItemName, currentItemPrice }));
-    else dispatch(incrementItem(currentItemName));
+    if (!quantities[itemID])
+      dispatch(
+        insertItemIntoCart({
+          itemID,
+          price,
+        })
+      );
+    else dispatch(incrementItemInCart(itemID));
   };
 
   const handleRemove = () => {
-    if (cart[currentItemName] && cart[currentItemName].qty > 1)
-      dispatch(decrementItem(currentItemName));
-    else dispatch(deleteItem(currentItemName));
+    if (quantities[itemID] && quantities[itemID] > 1)
+      dispatch(decrementItemInCart(itemID));
+    else dispatch(removeItemFromCart(itemID));
   };
 
   return (
     <div className={styles.buttonContainer}>
-      {!cart[currentItemName] ? (
+      {!quantities[itemID] ? (
         <button className={styles.addButton} onClick={handleAdd}>
           ADD
         </button>
@@ -37,7 +41,7 @@ const AddButton = (props) => {
           <button className={styles.decrementButton} onClick={handleRemove}>
             -
           </button>
-          {cart[currentItemName].qty}
+          {quantities[itemID]}
           <button className={styles.incrementButton} onClick={handleAdd}>
             +
           </button>

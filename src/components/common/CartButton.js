@@ -1,20 +1,20 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import {
-  incrementItem,
-  decrementItem,
-  deleteItem,
-} from "../../store/slices/cartSlice";
+  incrementItemInCart,
+  decrementItemInCart,
+  removeItemFromCart,
+} from "../../store/actions/cartActions";
 import styles from "./cart-button.module.scss";
 
-const CartButton = (props) => {
+// Button that shows next to each item present in the cart
+const CartButton = ({ itemID, qty }) => {
   const dispatch = useDispatch();
-  const { qty, name } = props;
 
-  const handleAdd = () => dispatch(incrementItem(name));
+  const handleAdd = () => dispatch(incrementItemInCart(itemID));
   const handleRemove = () => {
-    if (qty === 1) dispatch(deleteItem(name));
-    else dispatch(decrementItem(name));
+    if (qty === 1) dispatch(removeItemFromCart(itemID));
+    else dispatch(decrementItemInCart(itemID));
   };
 
   return (

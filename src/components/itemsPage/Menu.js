@@ -1,29 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./menu.module.scss";
 import { useSelector } from "react-redux";
-import { selectSlNo } from "../../store/slices/restaurantSlice";
-import { menuItems } from "../../constants/menuItems";
 import { AddButton } from "../common";
+import { isEmpty } from "lodash";
+import { Watch } from "react-loader-spinner";
 
-const Menu = () => {
-  const currentSlNo = useSelector(selectSlNo);
-  const [currentMenuItems, setCurrentMenuItems] = useState([]);
-  const [currentCategory, setCategory] = useState("");
-  useEffect(() => {
-    const currentMenu = menuItems.filter(
-      (item) => item.slNo === currentSlNo
-    )[0];
-    setCurrentMenuItems(currentMenu.items);
-    setCategory(currentMenu.categoryName);
-  }, [currentSlNo]);
+// Bottom middle component that shows the different items that are available in each cuisine
+const Menu = ({
+  categories,
+  categoryIDMapping,
+  categoryNameMapping,
+  idToNameMapping,
+}) => {
+  const selectedCusineNumber = useSelector(
+    (state) => state.menuPageReducer.selectedCusineNumber
+  );
 
-  return (
+  return isEmpty(categories) ? (
+    <div className={styles.loader}>
+      <Watch height="100" width="100" color="grey" ariaLabel="loading" />
+    </div>
+  ) : (
     <div className={styles.container}>
       <div>
-        <h1>{currentCategory}</h1>
-        <h4>{`${currentMenuItems.length} items`}</h4>
+        <h1>{categoryNameMapping[selectedCusineNumber]}</h1>
+        <h4>{`${categoryIDMapping[selectedCusineNumber].length} items`}</h4>
       </div>
-      {currentMenuItems.map((item, idx) => {
+      {categoryIDMapping[selectedCusineNumber].map((item, idx) => {
         return (
           <div className={styles.item} key={idx}>
             <div className={styles.itemDetails}>
@@ -31,8 +34,9 @@ const Menu = () => {
               <div className={styles.price}>{`₹ ${item.price}`}</div>
             </div>
             <AddButton
-              currentItemName={item.itemName}
-              currentItemPrice={item.price}
+              itemID={item.itemID}
+              price={item.price}
+              idToNameMapping={idToNameMapping}
             />
           </div>
         );

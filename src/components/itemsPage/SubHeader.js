@@ -1,7 +1,8 @@
 import React from "react";
-import styles from "./restaurant.module.scss";
+import styles from "./sub-header.module.scss";
 
-const Restaurant = () => {
+// This contains the restaurant name and location
+const SubHeader = () => {
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>
@@ -22,4 +23,4 @@ const Restaurant = () => {
   );
 };
 
-export default Restaurant;
+export default SubHeader;

@@ -1,4 +1,4 @@
-export const mainPageLinks = [
+export const MAIN_PAGE_LINKS = [
   {
     name: "Search",
     url: "/search",
@@ -17,7 +17,7 @@ export const mainPageLinks = [
   },
 ];
 
-export const checkoutPageLinks = [
+export const CHECKOUT_PAGE_LINKS = [
   {
     name: "Help",
     url: "/help",
