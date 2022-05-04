@@ -1,9 +1,9 @@
 import React from "react";
-import styles from "../../styles/items-page/cart.module.scss";
+import styles from "./cart.module.scss";
 import { useSelector } from "react-redux";
 import { selectCart } from "../../store/slices/cartSlice";
 import { Link } from "react-router-dom";
-import CartBody from "../common/CartBody";
+import { CartBody } from "../common";
 
 const Cart = () => {
   const cart = useSelector(selectCart);

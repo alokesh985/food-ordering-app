@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/common/cart-body.module.scss";
+import styles from "./cart-body.module.scss";
 import { useSelector } from "react-redux";
 import { selectCart } from "../../store/slices/cartSlice";
 import CartButton from "./CartButton";

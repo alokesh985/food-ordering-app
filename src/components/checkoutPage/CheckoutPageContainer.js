@@ -1,6 +1,6 @@
 import React from "react";
 import { checkoutPageLinks } from "../../constants/headerLinks";
-import Header from "../common/Header";
+import { Header } from "../common";
 import CheckoutBody from "./CheckoutBody";
 
 const CheckoutPageContainer = () => {

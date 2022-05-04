@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/items-page/item-categories.module.scss";
+import styles from "./item-categories.module.scss";
 import { menuItems } from "../../constants/menuItems";
 import { useSelector, useDispatch } from "react-redux";
 import { selectSlNo, changeSlNo } from "../../store/slices/restaurantSlice";

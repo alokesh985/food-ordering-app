@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "../../styles/checkout-page/checkout-body.module.scss";
-import CartBody from "../common/CartBody";
+import styles from "./checkout-body.module.scss";
+import { CartBody } from "../common";
 import { useSelector } from "react-redux";
 import { selectCart } from "../../store/slices/cartSlice";
 import { Link } from "react-router-dom";

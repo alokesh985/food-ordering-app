@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "./common/Header";
-import styles from "../styles/common/order-success-page.module.scss";
+import { Header } from "./common";
+import styles from "./common/order-success-page.module.scss";
 import { mainPageLinks } from "../constants/headerLinks";
 
 const OrderSuccessfulPage = () => {

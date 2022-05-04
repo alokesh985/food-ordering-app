@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "../styles/common/404.module.scss";
-import Header from "./common/Header";
+import styles from "./common/404.module.scss";
+import { Header } from "./common";
 import { mainPageLinks } from "../constants/headerLinks";
 
 const Page404 = () => {

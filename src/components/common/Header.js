@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/common/header.module.scss";
+import styles from "./header.module.scss";
 import { Link } from "react-router-dom";
 
 const Header = (props) => {

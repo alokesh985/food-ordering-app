@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import styles from "../../styles/items-page/menu.module.scss";
+import styles from "./menu.module.scss";
 import { useSelector } from "react-redux";
 import { selectSlNo } from "../../store/slices/restaurantSlice";
 import { menuItems } from "../../constants/menuItems";
-import AddButton from "../common/AddButton";
+import { AddButton } from "../common";
 
 const Menu = () => {
   const currentSlNo = useSelector(selectSlNo);

@@ -5,7 +5,7 @@ import {
   decrementItem,
   deleteItem,
 } from "../../store/slices/cartSlice";
-import styles from "../../styles/common/cart-button.module.scss";
+import styles from "./cart-button.module.scss";
 
 const CartButton = (props) => {
   const dispatch = useDispatch();

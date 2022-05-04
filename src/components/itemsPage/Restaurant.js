@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../styles/items-page/restaurant.module.scss";
+import styles from "./restaurant.module.scss";
 
 const Restaurant = () => {
   return (
