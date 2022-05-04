@@ -3,6 +3,7 @@ import styles from "./checkout-body.module.scss";
 import { CartBody } from "../common";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { isEmpty } from "lodash";
 
 const CheckoutBody = ({ foodItems }) => {
   const cart = useSelector((state) => state.cartReducer.cart);
@@ -24,7 +25,7 @@ const CheckoutBody = ({ foodItems }) => {
         <div className={styles.cart}>
           <CartBody foodItems={foodItems} />
         </div>
-        {Object.keys(cart).length > 0 && (
+        {!isEmpty(cart) && (
           <div className={styles.submitButtonContainer}>
             <Link to="/order-success">
               <button className={styles.submitButton}>PAY</button>

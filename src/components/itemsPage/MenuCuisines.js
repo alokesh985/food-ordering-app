@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styles from "./menu-cuisines.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { changeCategory } from "../../store/actions/menuPageActions";
 import { isEmpty } from "lodash";
 import { Watch } from "react-loader-spinner";
+import classNames from "classnames";
 
 // Bottom left-most component that shows the different cuisines available
 const MenuCuisines = ({ categoryToNameMapping }) => {
@@ -11,7 +12,17 @@ const MenuCuisines = ({ categoryToNameMapping }) => {
   const selectedCusineNumber = useSelector(
     (state) => state.menuPageReducer.selectedCusineNumber
   );
-  const handleClick = (cusineNumber) => dispatch(changeCategory(cusineNumber));
+  const handleClick = useCallback(
+    (cusineNumber) => dispatch(changeCategory(cusineNumber)),
+    []
+  );
+
+  const getCuisineClass = (cuisineNumber) => {
+    return classNames({
+      [styles.selectedCategory]: cuisineNumber === selectedCusineNumber,
+      [styles.category]: cuisineNumber !== selectedCusineNumber,
+    });
+  };
 
   return isEmpty(categoryToNameMapping) ? (
     <div className={styles.loader}>
@@ -24,11 +35,7 @@ const MenuCuisines = ({ categoryToNameMapping }) => {
           return (
             <div
               key={idx}
-              className={
-                selectedCusineNumber === cuisineNumber
-                  ? styles.selectedCategory
-                  : styles.category
-              }
+              className={getCuisineClass(cuisineNumber)}
               onClick={() => handleClick(cuisineNumber)}
             >
               {categoryToNameMapping[cuisineNumber]}

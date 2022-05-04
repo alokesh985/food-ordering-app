@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styles from "./add-button.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -13,7 +13,7 @@ const AddButton = ({ itemID, price, idToNameMapping }) => {
   const quantities = useSelector((state) => state.cartReducer.quantities);
   const dispatch = useDispatch();
 
-  const handleAdd = () => {
+  const handleAdd = useCallback(() => {
     if (!quantities[itemID])
       dispatch(
         insertItemIntoCart({
@@ -22,13 +22,13 @@ const AddButton = ({ itemID, price, idToNameMapping }) => {
         })
       );
     else dispatch(incrementItemInCart(itemID));
-  };
+  }, [quantities, itemID]);
 
-  const handleRemove = () => {
+  const handleRemove = useCallback(() => {
     if (quantities[itemID] && quantities[itemID] > 1)
       dispatch(decrementItemInCart(itemID));
     else dispatch(removeItemFromCart(itemID));
-  };
+  }, [quantities, itemID]);
 
   return (
     <div className={styles.buttonContainer}>
