@@ -6,10 +6,10 @@ import {
   removeItemFromCart,
   incrementItemInCart,
   decrementItemInCart,
-} from "../../store/actions/cartActions";
+} from "../../../store/actions/cartActions";
 
 // Button on right of each item in the menu
-const AddButton = ({ itemID, price, idToNameMapping }) => {
+const AddButton = ({ itemID, price }) => {
   const quantities = useSelector((state) => state.cartReducer.quantities);
   const dispatch = useDispatch();
 
@@ -30,23 +30,31 @@ const AddButton = ({ itemID, price, idToNameMapping }) => {
     else dispatch(removeItemFromCart(itemID));
   }, [quantities, itemID]);
 
+  const renderAddButton = () => {
+    return (
+      <button className={styles.addButton} onClick={handleAdd}>
+        ADD
+      </button>
+    );
+  };
+
+  const renderChangeQtyButton = () => {
+    return (
+      <div className={styles.incrementDecrementButton}>
+        <button className={styles.decrementButton} onClick={handleRemove}>
+          -
+        </button>
+        {quantities[itemID]}
+        <button className={styles.incrementButton} onClick={handleAdd}>
+          +
+        </button>
+      </div>
+    );
+  };
+
   return (
     <div className={styles.buttonContainer}>
-      {!quantities[itemID] ? (
-        <button className={styles.addButton} onClick={handleAdd}>
-          ADD
-        </button>
-      ) : (
-        <div className={styles.incrementDecrementButton}>
-          <button className={styles.decrementButton} onClick={handleRemove}>
-            -
-          </button>
-          {quantities[itemID]}
-          <button className={styles.incrementButton} onClick={handleAdd}>
-            +
-          </button>
-        </div>
-      )}
+      {!quantities[itemID] ? renderAddButton() : renderChangeQtyButton()}
     </div>
   );
 };

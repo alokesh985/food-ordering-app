@@ -1,17 +1,19 @@
 import React, { useCallback } from "react";
 import styles from "./menu-cuisines.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { changeCategory } from "../../store/actions/menuPageActions";
+import { changeCategory } from "../../../store/actions/menuPageActions";
 import { isEmpty } from "lodash";
-import { Watch } from "react-loader-spinner";
+import Loader from "../../common/Loader";
 import classNames from "classnames";
 
 // Bottom left-most component that shows the different cuisines available
 const MenuCuisines = ({ categoryToNameMapping }) => {
   const dispatch = useDispatch();
+
   const selectedCusineNumber = useSelector(
     (state) => state.menuPageReducer.selectedCusineNumber
   );
+
   const handleClick = useCallback(
     (cusineNumber) => dispatch(changeCategory(cusineNumber)),
     []
@@ -24,26 +26,32 @@ const MenuCuisines = ({ categoryToNameMapping }) => {
     });
   };
 
+  const renderCuisines = useCallback(() => {
+    return (
+      <div className={styles.container}>
+        <div className={styles.innerContainer}>
+          {Object.keys(categoryToNameMapping).map((cuisineNumber, idx) => {
+            return (
+              <div
+                key={idx}
+                className={getCuisineClass(cuisineNumber)}
+                onClick={() => handleClick(cuisineNumber)}
+              >
+                {categoryToNameMapping[cuisineNumber]}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }, [categoryToNameMapping, selectedCusineNumber]);
+
   return isEmpty(categoryToNameMapping) ? (
     <div className={styles.loader}>
-      <Watch height="100" width="100" color="grey" ariaLabel="loading" />
+      <Loader height="100" width="100" type="large" />
     </div>
   ) : (
-    <div className={styles.container}>
-      <div className={styles.innerContainer}>
-        {Object.keys(categoryToNameMapping).map((cuisineNumber, idx) => {
-          return (
-            <div
-              key={idx}
-              className={getCuisineClass(cuisineNumber)}
-              onClick={() => handleClick(cuisineNumber)}
-            >
-              {categoryToNameMapping[cuisineNumber]}
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    renderCuisines()
   );
 };
 
