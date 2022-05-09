@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./checkout-body.module.scss";
-import { CartBody } from "../../common";
+import { CartBody } from "../../../common";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { isEmpty } from "lodash";

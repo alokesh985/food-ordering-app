@@ -1,6 +1,6 @@
-import AddButton from "./AddButton";
-import CartBody from "./CartBody";
-import CartButton from "./CartButton";
-import Header from "./Header";
+import AddButton from "./AddButton/AddButton";
+import CartBody from "./CartBody/CartBody";
+import CartButton from "./CartButton/CartButton";
+import Header from "./Header/Header";
 
 export { AddButton, CartBody, CartButton, Header };

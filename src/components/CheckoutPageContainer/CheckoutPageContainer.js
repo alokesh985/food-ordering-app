@@ -1,7 +1,7 @@
 import React from "react";
-import { CHECKOUT_PAGE_LINKS } from "../../../constants/headerLinks";
-import { Header } from "../../common";
-import CheckoutBody from "../CheckoutBody";
+import { CHECKOUT_PAGE_LINKS } from "../../constants/headerLinks";
+import { Header } from "../common";
+import CheckoutBody from "./components/CheckoutBody";
 
 const CheckoutPageContainer = ({ foodItems }) => {
   return (
