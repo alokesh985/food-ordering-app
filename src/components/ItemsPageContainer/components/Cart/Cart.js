@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 import { CartBody } from "../../../common";
 import { isEmpty } from "lodash";
 
-const renderCartItems = (itemsInCart, foodItems) => {
+const renderCartItems = (itemsInCart) => {
   return (
     <div className={styles.cartContents}>
       <h1>CART</h1>
       <h3>{`${itemsInCart} ${itemsInCart === 1 ? "ITEM" : "ITEMS"}`}</h3>
-      <CartBody foodItems={foodItems} />
+      <CartBody />
       <Link to="/checkout">
         <button className={styles.checkoutButton}>CHECKOUT</button>
       </Link>
@@ -23,15 +23,13 @@ const renderEmptyCart = () => {
 };
 
 // Bottom right most component of the main page that shows contents of the cart
-const Cart = ({ foodItems }) => {
+const Cart = () => {
   const cart = useSelector((state) => state.cartReducer.cart);
   const itemsInCart = Object.keys(cart).length;
 
   return (
     <div className={styles.container}>
-      {isEmpty(cart)
-        ? renderEmptyCart()
-        : renderCartItems(itemsInCart, foodItems)}
+      {isEmpty(cart) ? renderEmptyCart() : renderCartItems(itemsInCart)}
     </div>
   );
 };

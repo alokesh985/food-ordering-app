@@ -1,36 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Header } from "../common";
 import SubHeader from "./components/SubHeader/SubHeader";
 import MenuCuisines from "./components/MenuCuisines";
 import Menu from "./components/Menu/Menu";
 import Cart from "./components/Cart";
 import { MAIN_PAGE_LINKS } from "../../constants/headerLinks";
+import { CUISINES } from "../../constants/cuisines";
+import { FOOD_ITEMS } from "../../constants/foodItems";
 import styles from "./items-page-container.module.scss";
+import Loader from "../common/Loader";
+import { saveMenuData } from "../actions/menuPage.actionCreator";
+import { useDispatch } from "react-redux";
 
-const renderBody = (categoryToNameMapping, categoryIDMapping, foodItems) => {
+const renderBody = () => {
   return (
     <div className={styles.body}>
-      <MenuCuisines categoryToNameMapping={categoryToNameMapping} />
-      <Menu
-        categoryIDMapping={categoryIDMapping}
-        categoryNameMapping={categoryToNameMapping}
-      />
-      <Cart foodItems={foodItems} />
+      <MenuCuisines />
+      <Menu />
+      <Cart />
     </div>
   );
 };
 
 // Container component for bottom part of main page
-const ItemsPageContainer = ({
-  foodItems,
-  categoryIDMapping,
-  categoryToNameMapping,
-}) => {
+const ItemsPageContainer = () => {
+  const [showLoader, toggleLoader] = useState(true);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchData = new Promise((resolve) => {
+      setTimeout(
+        () =>
+          resolve({
+            foodItems: FOOD_ITEMS,
+            cuisines: CUISINES,
+          }),
+        1000
+      );
+    });
+
+    fetchData
+      .then((response) => {
+        const { foodItems, cuisines } = response;
+        dispatch(saveMenuData({ foodItems: foodItems, cuisines: cuisines }));
+      })
+      .finally(() => toggleLoader(false));
+  }, []);
+
   return (
     <div>
       <Header headerLinks={MAIN_PAGE_LINKS} />
       <SubHeader />
-      {renderBody(categoryToNameMapping, categoryIDMapping, foodItems)}
+      {showLoader ? <Loader /> : renderBody()}
     </div>
   );
 };

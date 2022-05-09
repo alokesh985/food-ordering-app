@@ -1,8 +1,8 @@
 import cartReducer from "./cartReducer";
-import menuPageReducer from "./menuPageReducer";
+import menuReducer from "./menuReducer";
 import { combineReducers } from "redux";
 
 export default combineReducers({
   cartReducer,
-  menuPageReducer,
+  menuReducer,
 });

@@ -1,37 +1,30 @@
 import React from "react";
 import styles from "./menu-cuisines.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { changeCategory } from "../../../../store/actions/menuPageActions";
-import { isEmpty } from "lodash";
-import Loader from "../../../common/Loader";
+import { changeCuisine } from "../../../actions/menuPage.actionCreator";
 import classNames from "classnames";
 
-const handleClick = (dispatch, cusineNumber) =>
-  dispatch(changeCategory(cusineNumber));
+const handleClick = (dispatch, cuisineID) => dispatch(changeCuisine(cuisineID));
 
-const getCuisineClass = (cuisineNumber, selectedCusineNumber) => {
+const getCuisineClass = (cuisineID, selectedCuisineID) => {
   return classNames({
-    [styles.selectedCategory]: cuisineNumber === selectedCusineNumber,
-    [styles.category]: cuisineNumber !== selectedCusineNumber,
+    [styles.selectedCategory]: cuisineID === selectedCuisineID,
+    [styles.category]: cuisineID !== selectedCuisineID,
   });
 };
 
-const renderCuisines = (
-  dispatch,
-  categoryToNameMapping,
-  selectedCusineNumber
-) => {
+const renderCuisines = (dispatch, cuisines, selectedCuisineID) => {
   return (
     <div className={styles.container}>
       <div className={styles.innerContainer}>
-        {Object.keys(categoryToNameMapping).map((cuisineNumber, idx) => {
+        {cuisines.map((cuisine, idx) => {
           return (
             <div
               key={idx}
-              className={getCuisineClass(cuisineNumber, selectedCusineNumber)}
-              onClick={() => handleClick(dispatch, cuisineNumber)}
+              className={getCuisineClass(cuisine.id, selectedCuisineID)}
+              onClick={() => handleClick(dispatch, cuisine.id)}
             >
-              {categoryToNameMapping[cuisineNumber]}
+              {cuisine.name}
             </div>
           );
         })}
@@ -41,20 +34,15 @@ const renderCuisines = (
 };
 
 // Bottom left-most component that shows the different cuisines available
-const MenuCuisines = ({ categoryToNameMapping }) => {
+const MenuCuisines = () => {
   const dispatch = useDispatch();
 
-  const selectedCusineNumber = useSelector(
-    (state) => state.menuPageReducer.selectedCusineNumber
+  const selectedCuisineID = useSelector(
+    (state) => state.menuReducer.selectedCuisineID
   );
+  const cuisines = useSelector((state) => state.menuReducer.cuisines);
 
-  return isEmpty(categoryToNameMapping) ? (
-    <div className={styles.loader}>
-      <Loader height="100" width="100" type="large" />
-    </div>
-  ) : (
-    renderCuisines(dispatch, categoryToNameMapping, selectedCusineNumber)
-  );
+  return renderCuisines(dispatch, cuisines, selectedCuisineID);
 };
 
 export default MenuCuisines;

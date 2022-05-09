@@ -1,46 +1,39 @@
+import { ACTION_TYPES } from "../../constants/actionTypes";
+import produce from "immer";
+
 const initialState = {
-  quantities: {},
   cart: [],
+  cartAmount: 0,
 };
 
-let newObj;
-const cartReducer = (state = initialState, action) => {
+const cartReducer = produce((draftState = initialState, action) => {
   const { type, payload } = action;
+  const objectToChange = draftState.cart.find(
+    (element) => element.itemName === payload.itemName
+  );
+
   switch (type) {
-    case "INSERT_ITEM_INTO_CART":
-      return {
-        ...state,
-        cart: [...state.cart, payload],
-        quantities: { ...state.quantities, [payload.itemID]: 1 },
-      };
-    case "REMOVE_ITEM_FROM_CART":
-      let newCart = [...state.cart];
-      newCart = newCart.filter((item) => {
-        return item.itemID !== payload;
-      });
-      newObj = { ...state.quantities };
-      delete newObj[payload];
-      return {
-        cart: newCart,
-        quantities: newObj,
-      };
-    case "INCREMENT_ITEM_IN_CART":
-      newObj = { ...state.quantities };
-      newObj[payload] = newObj[payload] + 1;
-      return {
-        ...state,
-        quantities: newObj,
-      };
-    case "DECREMENT_ITEM_IN_CART":
-      newObj = { ...state.quantities };
-      newObj[payload] = newObj[payload] - 1;
-      return {
-        ...state,
-        quantities: newObj,
-      };
+    case ACTION_TYPES.INCREMENT_ITEM_IN_CART:
+      if (!objectToChange)
+        draftState.cart.push({ itemName: payload.itemName, quantity: 1 });
+      else objectToChange.quantity += 1;
+      return draftState;
+
+    case ACTION_TYPES.DECREMENT_ITEM_IN_CART:
+      if (objectToChange.quantity === 1)
+        draftState.cart = draftState.cart.filter(
+          (element) => element.itemName !== payload.itemName
+        );
+      else objectToChange.quantity -= 1;
+      return draftState;
+
+    case ACTION_TYPES.SET_TOTAL_CART_AMOUNT:
+      draftState.cartAmount = payload.cartAmount;
+      return draftState;
+
     default:
-      return state;
+      return draftState;
   }
-};
+});
 
 export default cartReducer;

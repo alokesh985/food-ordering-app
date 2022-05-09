@@ -1,30 +1,29 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styles from "./cart-body.module.scss";
 import { useSelector } from "react-redux";
 import CartButton from "../CartButton/CartButton";
-import Loader from "../Loader/Loader";
-import { isEmpty } from "lodash";
+import { getItemPrices } from "../../../store/reducers/selectors/menuSelectors.selectors";
 
-const calculateTotal = (cart, quantities) => {
+const calculateTotal = (cart, itemPrices) => {
   let total = 0;
-  for (let element of cart) {
-    total += element.price * quantities[element.itemID];
+  for (let foodItem of cart) {
+    total += foodItem.quantity * itemPrices[foodItem.itemName];
   }
   return total;
 };
 
-const renderCartItems = (cart, foodItems, quantities) => {
-  return cart.map((element, idx) => {
+const renderCartItems = (cart, itemPrices) => {
+  return cart.map((foodItem, idx) => {
     return (
       <div key={idx} className={styles.cartItem}>
-        {isEmpty(foodItems) ? (
-          <Loader height="35" width="35" type="small" />
-        ) : (
-          <h4 className={styles.itemName}>{foodItems[element.itemID]}</h4>
-        )}
-        <CartButton qty={quantities[element.itemID]} itemID={element.itemID} />
+        <h4 className={styles.itemName}>{foodItem.itemName}</h4>
+        <CartButton
+          qty={foodItem.quantity}
+          itemName={foodItem.itemName}
+          price={itemPrices[foodItem.itemName]}
+        />
         <h3 className={styles.price}>{`₹ ${
-          quantities[element.itemID] * element.price
+          foodItem.quantity * itemPrices[foodItem.itemName]
         }`}</h3>
       </div>
     );
@@ -32,16 +31,18 @@ const renderCartItems = (cart, foodItems, quantities) => {
 };
 
 // Common component that shows the items in the cart and the total amount
-const CartBody = ({ foodItems }) => {
+const CartBody = () => {
   const cart = useSelector((state) => state.cartReducer.cart);
-  const quantities = useSelector((state) => state.cartReducer.quantities);
+  const itemPrices = useSelector(getItemPrices);
+
+  const memoizedTotal = useMemo(() => calculateTotal(cart, itemPrices), [cart]);
 
   return (
     <React.Fragment>
       <div className={styles.cartItemDetails}>
-        {renderCartItems(cart, foodItems, quantities)}
+        {renderCartItems(cart, itemPrices)}
       </div>
-      <h1>{`TOTAL: ₹ ${calculateTotal(cart, quantities)}`}</h1>
+      <h1>{`TOTAL: ₹ ${memoizedTotal}`}</h1>
     </React.Fragment>
   );
 };

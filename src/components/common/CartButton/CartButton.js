@@ -3,32 +3,31 @@ import { useDispatch } from "react-redux";
 import {
   incrementItemInCart,
   decrementItemInCart,
-  removeItemFromCart,
-} from "../../../store/actions/cartActions";
+} from "../../actions/cart.actionCreator";
 import styles from "./cart-button.module.scss";
 
-const handleAdd = (dispatch, itemID) => dispatch(incrementItemInCart(itemID));
+const handleAdd = (dispatch, itemName, price) =>
+  dispatch(incrementItemInCart(itemName, price));
 
-const handleRemove = (dispatch, itemID, qty) => {
-  if (qty === 1) dispatch(removeItemFromCart(itemID));
-  else dispatch(decrementItemInCart(itemID));
+const handleRemove = (dispatch, itemName) => {
+  dispatch(decrementItemInCart(itemName));
 };
 
 // Button that shows next to each item present in the cart
-const CartButton = ({ itemID, qty }) => {
+const CartButton = ({ itemName, qty, price }) => {
   const dispatch = useDispatch();
 
   return (
     <div className={styles.container}>
       <button
-        onClick={() => handleRemove(dispatch, itemID, qty)}
+        onClick={() => handleRemove(dispatch, itemName)}
         className={styles.subtractButton}
       >
         -
       </button>
       {qty}
       <button
-        onClick={() => handleAdd(dispatch, itemID)}
+        onClick={() => handleAdd(dispatch, itemName, price)}
         className={styles.addButton}
       >
         +

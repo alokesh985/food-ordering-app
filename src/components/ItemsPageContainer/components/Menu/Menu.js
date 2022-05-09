@@ -2,38 +2,37 @@ import React from "react";
 import styles from "./menu.module.scss";
 import { useSelector } from "react-redux";
 import { AddButton } from "../../../common";
-import { isEmpty } from "lodash";
-import Loader from "../../../common/Loader/Loader";
+import {
+  getItemPrices,
+  getCurrentCuisineFoodItems,
+} from "../../../../store/reducers/selectors/menuSelectors.selectors";
 
-const renderMenuItems = (categoryIDMapping, selectedCusineNumber) => {
-  return categoryIDMapping[selectedCusineNumber].map((item, idx) => {
+const renderMenuItems = (currentFoodItems, foodItemPrices) => {
+  return currentFoodItems.map((item, idx) => {
     return (
       <div className={styles.item} key={idx}>
         <div className={styles.itemDetails}>
-          <div className={styles.name}>{item.itemName}</div>
-          <div className={styles.price}>{`₹ ${item.price}`}</div>
+          <div className={styles.name}>{item}</div>
+          <div className={styles.price}>{`₹ ${foodItemPrices[item]}`}</div>
         </div>
-        <AddButton itemID={item.itemID} price={item.price} />
+        <AddButton itemName={item} price={foodItemPrices[item]} />
       </div>
     );
   });
 };
 
 // Bottom middle component that shows the different items that are available in each cuisine
-const Menu = ({ categoryIDMapping, categoryNameMapping }) => {
-  const selectedCusineNumber = useSelector(
-    (state) => state.menuPageReducer.selectedCusineNumber
-  );
+const Menu = () => {
+  const foodItemPrices = useSelector(getItemPrices);
+  const { cuisineName, cuisineItems } = useSelector(getCurrentCuisineFoodItems);
 
-  return isEmpty(categoryIDMapping) ? (
-    <Loader height="100" width="100" type="large" />
-  ) : (
+  return (
     <div className={styles.container}>
       <div>
-        <h1>{categoryNameMapping[selectedCusineNumber]}</h1>
-        <h4>{`${categoryIDMapping[selectedCusineNumber].length} items`}</h4>
+        <h1>{cuisineName}</h1>
+        <h4>{`${cuisineItems.length} items`}</h4>
       </div>
-      {renderMenuItems(categoryIDMapping, selectedCusineNumber)}
+      {renderMenuItems(cuisineItems, foodItemPrices)}
     </div>
   );
 };

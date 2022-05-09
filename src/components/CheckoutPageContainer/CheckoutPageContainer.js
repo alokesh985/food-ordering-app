@@ -3,7 +3,8 @@ import { CHECKOUT_PAGE_LINKS } from "../../constants/headerLinks";
 import { Header } from "../common";
 import CheckoutBody from "./components/CheckoutBody";
 
-const CheckoutPageContainer = ({ foodItems }) => {
+const CheckoutPageContainer = () => {
+  const foodItems = [];
   return (
     <div>
       <Header headerLinks={CHECKOUT_PAGE_LINKS} headerText="SECURE CHECKOUT" />
