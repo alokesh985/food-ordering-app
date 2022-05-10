@@ -11,6 +11,7 @@ import styles from "./items-page-container.module.scss";
 import Loader from "../common/Loader";
 import { saveMenuData } from "../actions/menuPage.actionCreator";
 import { useDispatch } from "react-redux";
+import { compose } from "recompose";
 
 const renderBody = () => {
   return (
@@ -42,7 +43,7 @@ const ItemsPageContainer = () => {
     fetchData
       .then((response) => {
         const { foodItems, cuisines } = response;
-        dispatch(saveMenuData({ foodItems: foodItems, cuisines: cuisines }));
+        compose(dispatch, saveMenuData)({ foodItems, cuisines });
       })
       .finally(() => toggleLoader(false));
   }, []);

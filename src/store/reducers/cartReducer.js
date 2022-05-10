@@ -3,7 +3,6 @@ import produce from "immer";
 
 const initialState = {
   cart: [],
-  cartAmount: 0,
 };
 
 const cartReducer = produce((draftState = initialState, action) => {
@@ -25,10 +24,6 @@ const cartReducer = produce((draftState = initialState, action) => {
           (element) => element.itemName !== payload.itemName
         );
       else objectToChange.quantity -= 1;
-      return draftState;
-
-    case ACTION_TYPES.SET_TOTAL_CART_AMOUNT:
-      draftState.cartAmount = payload.cartAmount;
       return draftState;
 
     default:

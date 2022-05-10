@@ -7,18 +7,22 @@ import {
   getCurrentCuisineFoodItems,
 } from "../../../../store/reducers/selectors/menuSelectors.selectors";
 
-const renderMenuItems = (currentFoodItems, foodItemPrices) => {
-  return currentFoodItems.map((item, idx) => {
-    return (
-      <div className={styles.item} key={idx}>
-        <div className={styles.itemDetails}>
-          <div className={styles.name}>{item}</div>
-          <div className={styles.price}>{`₹ ${foodItemPrices[item]}`}</div>
-        </div>
-        <AddButton itemName={item} price={foodItemPrices[item]} />
+const renderMenuItem = function (foodItem, idx) {
+  return (
+    <div className={styles.item} key={idx}>
+      <div className={styles.itemDetails}>
+        <div className={styles.name}>{foodItem}</div>
+        <div
+          className={styles.price}
+        >{`₹ ${this.foodItemPrices[foodItem]}`}</div>
       </div>
-    );
-  });
+      <AddButton itemName={foodItem} />
+    </div>
+  );
+};
+
+const renderMenuItems = (currentFoodItems, foodItemPrices) => {
+  return currentFoodItems.map(renderMenuItem, { foodItemPrices });
 };
 
 // Bottom middle component that shows the different items that are available in each cuisine

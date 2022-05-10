@@ -2,14 +2,16 @@ import React from "react";
 import styles from "./header.module.scss";
 import { Link } from "react-router-dom";
 
+const renderHeaderLink = (headerLink, idx) => {
+  return (
+    <a className={styles.headerLink} key={idx} href={headerLink.url}>
+      {headerLink.name}
+    </a>
+  );
+};
+
 const renderHeaderLinks = (headerLinks) => {
-  return headerLinks.map((element, idx) => {
-    return (
-      <a className={styles.headerLink} key={idx} href={element.url}>
-        {element.name}
-      </a>
-    );
-  });
+  return headerLinks.map(renderHeaderLink);
 };
 
 const renderSwiggyLogo = (headerText) => {

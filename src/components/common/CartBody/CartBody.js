@@ -12,22 +12,20 @@ const calculateTotal = (cart, itemPrices) => {
   return total;
 };
 
+const renderCartItem = function (foodItem, idx) {
+  return (
+    <div key={idx} className={styles.cartItem}>
+      <h4 className={styles.itemName}>{foodItem.itemName}</h4>
+      <CartButton qty={foodItem.quantity} itemName={foodItem.itemName} />
+      <h3 className={styles.price}>{`₹ ${
+        foodItem.quantity * this.itemPrices[foodItem.itemName]
+      }`}</h3>
+    </div>
+  );
+};
+
 const renderCartItems = (cart, itemPrices) => {
-  return cart.map((foodItem, idx) => {
-    return (
-      <div key={idx} className={styles.cartItem}>
-        <h4 className={styles.itemName}>{foodItem.itemName}</h4>
-        <CartButton
-          qty={foodItem.quantity}
-          itemName={foodItem.itemName}
-          price={itemPrices[foodItem.itemName]}
-        />
-        <h3 className={styles.price}>{`₹ ${
-          foodItem.quantity * itemPrices[foodItem.itemName]
-        }`}</h3>
-      </div>
-    );
-  });
+  return cart.map(renderCartItem, { itemPrices });
 };
 
 // Common component that shows the items in the cart and the total amount

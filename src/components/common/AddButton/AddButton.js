@@ -6,27 +6,28 @@ import {
   decrementItemInCart,
 } from "../../actions/cart.actionCreator";
 import { getCartQuantites } from "../../../store/reducers/selectors/cartSelectors.selector";
+import { compose } from "recompose";
 
-const handleAdd = (dispatch, itemName, price) => {
-  dispatch(incrementItemInCart(itemName, price));
+const handleAdd = (dispatch, itemName) => {
+  compose(dispatch, incrementItemInCart)({ itemName });
 };
 
 const handleRemove = (dispatch, itemName) => {
-  dispatch(decrementItemInCart(itemName));
+  compose(dispatch, decrementItemInCart)({ itemName });
 };
 
-const renderAddButton = (dispatch, itemName, price) => {
+const renderAddButton = (dispatch, itemName) => {
   return (
     <button
       className={styles.addButton}
-      onClick={() => handleAdd(dispatch, itemName, price)}
+      onClick={() => handleAdd(dispatch, itemName)}
     >
       ADD
     </button>
   );
 };
 
-const renderChangeQtyButton = (dispatch, quantities, itemName, price) => {
+const renderChangeQtyButton = (dispatch, quantities, itemName) => {
   return (
     <div className={styles.incrementDecrementButton}>
       <button
@@ -38,7 +39,7 @@ const renderChangeQtyButton = (dispatch, quantities, itemName, price) => {
       {quantities[itemName]}
       <button
         className={styles.incrementButton}
-        onClick={() => handleAdd(dispatch, itemName, price)}
+        onClick={() => handleAdd(dispatch, itemName)}
       >
         +
       </button>
@@ -47,15 +48,15 @@ const renderChangeQtyButton = (dispatch, quantities, itemName, price) => {
 };
 
 // Button on right of each item in the menu
-const AddButton = ({ itemName, price }) => {
+const AddButton = ({ itemName }) => {
   const quantities = useSelector(getCartQuantites);
   const dispatch = useDispatch();
 
   return (
     <div className={styles.buttonContainer}>
       {!quantities[itemName]
-        ? renderAddButton(dispatch, itemName, price)
-        : renderChangeQtyButton(dispatch, quantities, itemName, price)}
+        ? renderAddButton(dispatch, itemName)
+        : renderChangeQtyButton(dispatch, quantities, itemName)}
     </div>
   );
 };

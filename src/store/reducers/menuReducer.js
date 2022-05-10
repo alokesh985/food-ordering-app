@@ -1,4 +1,5 @@
 import { ACTION_TYPES } from "../../constants/actionTypes";
+import produce from "immer";
 
 const initialState = {
   selectedCuisineID: "RECOMMENDED",
@@ -6,20 +7,21 @@ const initialState = {
   foodItems: [],
 };
 
-const menuReducer = (state = initialState, action) => {
+const menuReducer = produce((draftState = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case ACTION_TYPES.CHANGE_CUISINE:
-      return { ...state, selectedCuisineID: payload.selectedCuisineID };
+      draftState.selectedCuisineID = payload.cuisineID;
+      return draftState;
+
     case ACTION_TYPES.SAVE_MENU_DATA:
-      return {
-        ...state,
-        cuisines: payload.cuisines,
-        foodItems: payload.foodItems,
-      };
+      draftState.cuisines = payload.cuisines;
+      draftState.foodItems = payload.foodItems;
+      return draftState;
+
     default:
-      return state;
+      return draftState;
   }
-};
+});
 
 export default menuReducer;

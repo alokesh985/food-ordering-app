@@ -5,18 +5,27 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { isEmpty } from "lodash";
 
-const CheckoutBody = ({ foodItems }) => {
-  const cart = useSelector((state) => state.cartReducer.cart);
-
-  const renderPayButton = () => {
-    return (
+const renderCart = (foodItems) => {
+  return (
+    <React.Fragment>
+      <div className={styles.cart}>
+        <CartBody foodItems={foodItems} />
+      </div>
       <div className={styles.submitButtonContainer}>
         <Link to="/order-success">
           <button className={styles.submitButton}>PAY</button>
         </Link>
       </div>
-    );
-  };
+    </React.Fragment>
+  );
+};
+
+const renderEmptyCart = () => {
+  return <h1 className={styles.cartEmptyText}>Cart Empty</h1>;
+};
+
+const CheckoutBody = ({ foodItems }) => {
+  const cart = useSelector((state) => state.cartReducer.cart);
 
   return (
     <div className={styles.container}>
@@ -33,10 +42,7 @@ const CheckoutBody = ({ foodItems }) => {
             <h4 className={styles.location}>Bengaluru, Karnataka</h4>
           </div>
         </div>
-        <div className={styles.cart}>
-          <CartBody foodItems={foodItems} />
-        </div>
-        {!isEmpty(cart) && renderPayButton()}
+        {isEmpty(cart) ? renderEmptyCart() : renderCart(foodItems)}
       </div>
     </div>
   );
