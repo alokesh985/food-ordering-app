@@ -7,10 +7,10 @@ import {
 import styles from "./cart-button.module.scss";
 import { compose } from "recompose";
 
-const handleAdd = (dispatch, itemName) =>
+const handleAdd = (dispatch, itemName) => () =>
   compose(dispatch, incrementItemInCart)({ itemName });
 
-const handleRemove = (dispatch, itemName) => {
+const handleRemove = (dispatch, itemName) => () => {
   compose(dispatch, decrementItemInCart)({ itemName });
 };
 
@@ -21,14 +21,14 @@ const CartButton = ({ itemName, qty }) => {
   return (
     <div className={styles.container}>
       <button
-        onClick={() => handleRemove(dispatch, itemName)}
+        onClick={handleRemove(dispatch, itemName)}
         className={styles.subtractButton}
       >
         -
       </button>
       {qty}
       <button
-        onClick={() => handleAdd(dispatch, itemName)}
+        onClick={handleAdd(dispatch, itemName)}
         className={styles.addButton}
       >
         +

@@ -8,11 +8,11 @@ import {
 import { getCartQuantites } from "../../../store/reducers/selectors/cartSelectors.selector";
 import { compose } from "recompose";
 
-const handleAdd = (dispatch, itemName) => {
+const handleAdd = (dispatch, itemName) => () => {
   compose(dispatch, incrementItemInCart)({ itemName });
 };
 
-const handleRemove = (dispatch, itemName) => {
+const handleRemove = (dispatch, itemName) => () => {
   compose(dispatch, decrementItemInCart)({ itemName });
 };
 
@@ -20,7 +20,7 @@ const renderAddButton = (dispatch, itemName) => {
   return (
     <button
       className={styles.addButton}
-      onClick={() => handleAdd(dispatch, itemName)}
+      onClick={handleAdd(dispatch, itemName)}
     >
       ADD
     </button>
@@ -32,14 +32,14 @@ const renderChangeQtyButton = (dispatch, quantities, itemName) => {
     <div className={styles.incrementDecrementButton}>
       <button
         className={styles.decrementButton}
-        onClick={() => handleRemove(dispatch, itemName)}
+        onClick={handleRemove(dispatch, itemName)}
       >
         -
       </button>
       {quantities[itemName]}
       <button
         className={styles.incrementButton}
-        onClick={() => handleAdd(dispatch, itemName)}
+        onClick={handleAdd(dispatch, itemName)}
       >
         +
       </button>
